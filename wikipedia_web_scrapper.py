@@ -66,6 +66,7 @@ for ele in index_element:
             print(con)
             
             file.write(con)
+            file.write("\n")
 
         # Traversing to next content of index
 
