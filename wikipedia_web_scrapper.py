@@ -1,9 +1,18 @@
 from bs4 import BeautifulSoup
 import requests
+import os
+import codecs
+if os.path.exists("output.txt"):
+  os.remove("Output.txt")
+else:
+    pass
 
-# Geting page content
+file = codecs.open("Output.txt", "a", "utf-8")
+# Name for url
+wiki_url = input("Please enter your name: ")[0]
 
-page = requests.get("https://en.wikipedia.org/wiki/H")
+# Geting page content 
+page = requests.get(f"https://en.wikipedia.org/wiki/{wiki_url}")
 
 # Get page html source
 
@@ -31,9 +40,14 @@ for ele in index_element:
     element = ele
     heading = element.find(text=True)
 
-    # Print the heading of index(content)
+    # Print the heading of index(content) and saving in file
 
     print(heading)
+    
+    file.write("\n")
+    file.write(heading)
+    file.write("\n")
+
 
     # Print the content of index
 
@@ -47,10 +61,16 @@ for ele in index_element:
 
             con = ''.join([ para.text for para in (element.find_next_sibling())])
 
-            # Printing the text
+            # Printing the text and saving in file
 
             print(con)
+            
+            file.write(con)
 
         # Traversing to next content of index
 
         element = element.find_next_sibling(not "h2")
+
+# Saving the output file
+
+file.close()
